@@ -1,0 +1,6 @@
+framework module Pods_Tumble {
+  umbrella header "Pods-Tumble-umbrella.h"
+
+  export *
+  module * { export * }
+}
