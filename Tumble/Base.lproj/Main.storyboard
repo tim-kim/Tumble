@@ -19,11 +19,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="204" id="N9y-bu-dZF" customClass="TableViewCell" customModule="Tumble" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cell" rowHeight="204" id="N9y-bu-dZF" customClass="TableViewCell" customModule="Tumble" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="375" height="204"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N9y-bu-dZF" id="JJs-sL-vLi">
-                                            <frame key="frameInset" width="375" height="203.5"/>
+                                            <frame key="frameInset" width="342" height="203"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="Cuu-et-tEi">
@@ -34,6 +34,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="tumblePicture" destination="Cuu-et-tEi" id="lgT-TN-Lrn"/>
+                                            <segue destination="LKZ-E2-X4e" kind="push" identifier="show" id="amJ-rR-gpu"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -48,7 +49,6 @@
                     <navigationItem key="navigationItem" id="UOy-pm-VZr"/>
                     <connections>
                         <outlet property="tableView" destination="qkM-JQ-i52" id="vyF-9v-uCc"/>
-                        <segue destination="LKZ-E2-X4e" kind="push" identifier="show" id="1Lw-aJ-npX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFG-3h-xhU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -62,13 +62,22 @@
                     <view key="view" contentMode="scaleToFill" id="7Hz-hH-8K7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="UJ6-Va-No3">
+                                <frame key="frameInset" minY="66" width="375" height="236"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="0OY-Qh-X4t"/>
+                    <connections>
+                        <outlet property="picture" destination="UJ6-Va-No3" id="tY8-2K-b5p"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VU4-pP-gUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1168" y="150"/>
+            <point key="canvasLocation" x="1167.5" y="149.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Mvh-az-Z3B">

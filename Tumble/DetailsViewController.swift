@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import AFNetworking
 
 class DetailsViewController: UIViewController {
-
+    
+    var pictureUrl: URL!
+    @IBOutlet weak var picture: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        picture.setImageWith(pictureUrl)
+        
     }
 
     override func didReceiveMemoryWarning() {
