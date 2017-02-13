@@ -15,13 +15,16 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     var isMoreDataLoading = false
-    //var loadingMoreView:InfiniteScrollActivityView?
+    var loadingMoreView:InfiniteScrollActivityView?
+    var counter = 0
     let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /*
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         //set up infinite scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
         loadingMoreView = InfiniteScrollActivityView(frame: frame)
@@ -31,10 +34,9 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var insets = tableView.contentInset
         insets.bottom += InfiniteScrollActivityView.defaultHeight
         tableView.contentInset = insets
-        */
+        
  
- 
-        refreshControlAction(refreshControl: UIRefreshControl())
+        loadMoreData()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)),
                                  for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
@@ -46,7 +48,8 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func loadMoreData() {
-        let url = URL(string:"https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/posts/photo?api_key=Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV")
+        let url = URL(string:"https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/posts/photo?api_key=Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV&offset=\(self.counter)")
+        counter += 20
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
@@ -67,6 +70,7 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     with: data, options:[]) as? NSDictionary {
                     
                     self.isMoreDataLoading = false
+                    self.loadingMoreView!.stopAnimating()
                     self.refreshControl.endRefreshing()
                     //print("responseDictionary: \(responseDictionary)")
                     
@@ -75,7 +79,7 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let responseFieldDictionary = responseDictionary["response"] as! NSDictionary
                     
                     // This is where you will store the returned array of posts in your posts property
-                    self.posts = responseFieldDictionary["posts"] as! [NSDictionary]
+                    self.posts += responseFieldDictionary["posts"] as! [NSDictionary]
                     self.tableView.reloadData()
                 }
             }
@@ -121,6 +125,10 @@ class PhotosViewController: UIViewController, UITableViewDelegate, UITableViewDa
             // When the user has scrolled past the threshold, start requesting
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
                 isMoreDataLoading = true
+                //update position of loading more view, and start loading indicator
+                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
                 loadMoreData()
             }
             
